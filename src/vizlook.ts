@@ -27,7 +27,7 @@ export class Vizlook {
    * @param {string} [VizlookOptions.apiKey] - The API key for authentication.
    * @param {string} [VizlookOptions.baseURL] - The base URL of the Vizlook API.
    */
-  constructor({ apiKey, baseURL }: VizlookOptions) {
+  constructor({ apiKey, baseURL }: VizlookOptions = {}) {
     if (!apiKey) {
       apiKey = process.env.VIZLOOK_API_KEY;
       if (!apiKey) {
