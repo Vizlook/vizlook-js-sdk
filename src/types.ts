@@ -225,11 +225,11 @@ export interface AnswerResponse {
 export type AnswerStreamChunk =
   | { type: "answer-chunk"; data: string }
   | {
-      type: "citations";
+      type: "data-citations";
       data: { citations: AnswerCitationItem[] };
     }
   | {
-      type: "cost";
+      type: "data-cost";
       data: { dollarCost: { total: number } };
     }
   | { type: "error"; data: { errorText: string } };

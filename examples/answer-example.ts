@@ -20,10 +20,10 @@ async function runExamples() {
           answer += chunk.data;
           console.log("Answer chunk:", chunk.data);
           break;
-        case "citations":
+        case "data-citations":
           console.log("Citations:", chunk.data.citations);
           break;
-        case "cost":
+        case "data-cost":
           console.log("Cost:", chunk.data.dollarCost);
           break;
         case "error":
