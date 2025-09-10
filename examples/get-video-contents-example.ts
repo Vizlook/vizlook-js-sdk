@@ -6,29 +6,16 @@ const vizlook = new Vizlook({
 
 async function runExamples() {
   try {
-    // Crawl video contents in real-time
-    const response1 = await vizlook.getVideoContents(
-      "https://www.youtube.com/watch?v=QdBokRd2ahw",
-      {
-        crawlMode: "Always",
-      }
-    );
-    console.log("results 1:", response1.results);
-
-    // Get video contents from existing data
-    const response2 = await vizlook.getVideoContents(
-      "https://www.youtube.com/watch?v=QdBokRd2ahw"
-    );
-    console.log("results 2:", response2.results);
-
     // Crawl video content in real time when there is no corresponding video in the existing data
-    const response3 = await vizlook.getVideoContents(
+    const response = await vizlook.getVideoContents(
       "https://www.youtube.com/watch?v=QdBokRd2ahw",
       {
         crawlMode: "Fallback",
+        includeTranscription: true,
+        includeSummary: true,
       }
     );
-    console.log("results 3:", response3.results);
+    console.log("response:", response);
   } catch (error) {
     console.error("Error:", error);
   }

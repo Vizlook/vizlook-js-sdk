@@ -1,15 +1,4 @@
 /**
- * Configure what search results include.
- * @typedef {Object} ContentOptions
- * @property {boolean} [needTranscription] - Whether to include video transcription in the search results.
- * @property {boolean} [needSummary] - Whether to include video summary in the search results.
- */
-export interface ContentOptions {
-  needTranscription?: boolean;
-  needSummary?: boolean;
-}
-
-/**
  * Video category
  */
 export type Category =
@@ -20,21 +9,32 @@ export type Category =
   | "Education";
 
 /**
- * Search options for performing a search query.
- * @typedef {Object} SearchOptions
+ * Configure what search results include.
+ * @typedef {Object} ContentOptions
+ * @property {boolean} [includeTranscription] - Whether to include video transcription in the search results.
+ * @property {boolean} [includeSummary] - Whether to include video summary in the search results.
+ */
+export interface ContentOptions {
+  includeTranscription?: boolean;
+  includeSummary?: boolean;
+}
+
+/**
+ * Basic search options for performing a search query.
+ * @typedef {Object} BaseSearchOptions
  * @property {Category} [category] - A video category.
  * @property {string | number} [startPublishedDate] - Start date for results based on video published date in millisecond or ISO timestamp string.
  * @property {string | number} [endPublishedDate] - End date for results based on video published date in millisecond or ISO timestamp string.
  * @property {number} [maxResults] - The maximum number of search results to return. The default value is 10 and the maximum value is 20.
- * @property {ContentOptions} [config] - Configure what search results include.
  */
-export interface SearchOptions {
+export interface BaseSearchOptions {
   category?: Category;
   startPublishedDate?: string | number;
   endPublishedDate?: string | number;
   maxResults?: number;
-  config?: ContentOptions;
 }
+
+export type SearchOptions = BaseSearchOptions & ContentOptions;
 
 /**
  * Video clip
@@ -157,7 +157,7 @@ export interface SearchResponse {
   dollarCost: {
     total: number;
     breakdown?: {
-      search?: number;
+      search: number;
       summary?: number;
       transcription?: number;
     };
@@ -166,10 +166,10 @@ export interface SearchResponse {
 
 /**
  * @typedef {Object} AnswerOptions
- * @property {boolean} [needTranscription] - Whether to include video transcription in the answer citations.
+ * @property {boolean} [includeTranscription] - Whether to include video transcription in the answer citations.
  */
 export interface AnswerOptions {
-  needTranscription?: boolean;
+  includeTranscription?: boolean;
 }
 
 /**
@@ -235,14 +235,14 @@ export type AnswerStreamChunk =
   | { type: "error"; data: { errorText: string } };
 
 /**
- * @typedef {Object} VideoContentsOptions
+ * @typedef {Object} BaseVideoContentsOptions
  * @property {string} [crawlMode] - Crawl mode, default is 'Never'
- * @property {ContentOptions} [config] - Configure what video results include.
  */
-export interface VideoContentsOptions {
+export interface BaseVideoContentsOptions {
   crawlMode?: "Never" | "Fallback" | "Always";
-  config?: ContentOptions;
 }
+
+export type VideoContentsOptions = BaseVideoContentsOptions & ContentOptions;
 
 /**
  * @typedef {string} VideoContentErrorType - Error type when getting video contents

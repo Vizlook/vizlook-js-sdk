@@ -26,10 +26,9 @@ Performs a video search on the Vizlook system.
 const response = await vizlook.search("how to be productive", {
   maxResults: 5,
   startPublishedDate: "2025-08-19T15:01:36.000Z",
-  config: {
-    needTranscription: true,
-    needSummary: true,
-  },
+  endPublishedDate: Date.now(),
+  includeTranscription: true,
+  includeSummary: true,
 });
 ```
 
@@ -37,7 +36,7 @@ Generates an answer to a query.
 
 ```javascript
 const response = await vizlook.answer("how to be productive", {
-  needTranscription: true,
+  includeTranscription: true,
 });
 ```
 
@@ -74,6 +73,8 @@ const response = await vizlook.getVideoContents(
   "https://www.youtube.com/watch?v=QdBokRd2ahw",
   {
     crawlMode: "Always",
+    includeTranscription: true,
+    includeSummary: true,
   }
 );
 ```

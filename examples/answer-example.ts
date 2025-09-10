@@ -7,7 +7,9 @@ const vizlook = new Vizlook({
 async function runExamples() {
   try {
     // Answer in non-stream mode
-    const response = await vizlook.answer("how to be productive");
+    const response = await vizlook.answer("how to be productive", {
+      includeTranscription: true,
+    });
     console.log("Answer:", response.answer);
     console.log("Citations:", response.citations);
 

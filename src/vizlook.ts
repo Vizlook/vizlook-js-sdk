@@ -132,9 +132,16 @@ export class Vizlook {
     query: string,
     options?: SearchOptions
   ): Promise<SearchResponse> {
+    const { includeTranscription, includeSummary, ...restOptions } =
+      options || {};
+
     return await this.request<SearchResponse>("/search", "POST", {
       query,
-      ...options,
+      contentOptions: {
+        includeTranscription,
+        includeSummary,
+      },
+      ...restOptions,
     });
   }
 
@@ -152,8 +159,8 @@ export class Vizlook {
     const body = {
       query,
       stream: false,
-      config: {
-        needTranscription: options?.needTranscription,
+      contentOptions: {
+        includeTranscription: options?.includeTranscription,
       },
     };
 
@@ -183,8 +190,8 @@ export class Vizlook {
     const body = {
       query,
       stream: true,
-      config: {
-        needTranscription: options?.needTranscription,
+      contentOptions: {
+        includeTranscription: options?.includeTranscription,
       },
     };
 
@@ -276,23 +283,21 @@ export class Vizlook {
     urls: string | string[],
     options?: VideoContentsOptions
   ): Promise<VideoContentsResponse> {
-    if (!urls || (Array.isArray(urls) && urls.length === 0)) {
-      throw new VizlookError(
-        "Must provide at least one URL.",
-        HttpStatusCode.BadRequest,
-        {
-          path: "/videos",
-        }
-      );
-    }
-
-    if (typeof urls === "string") {
+    if (!Array.isArray(urls)) {
       urls = [urls];
     }
 
+    const { includeTranscription, includeSummary, ...restOptions } =
+      options || {};
+
     return await this.request<VideoContentsResponse>("/videos", "POST", {
       urls,
-      ...options,
+      contentOptions: {
+        // The result will include at least one of the transcription and summary; by default, the transcription will be returned.
+        includeTranscription: includeTranscription || !includeSummary,
+        includeSummary,
+      },
+      ...restOptions,
     });
   }
 }
