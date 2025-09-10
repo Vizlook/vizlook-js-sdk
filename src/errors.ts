@@ -1,8 +1,8 @@
 export enum HttpStatusCode {
   BadRequest = 400,
   Unauthorized = 401,
-  InsufficientBalance = 402,
   TooManyRequests = 429,
+  PayAsYouGoLimitExceeded = 432,
   InternalServerError = 500,
 }
 
